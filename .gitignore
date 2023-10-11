@@ -1,0 +1,58 @@
+# comúnmente ignorado por las bibliotecas.
+# https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
+
+#pdm
+# Similar a Pipfile.lock, generalmente se recomienda incluir pdm.lock en el control de versiones.
+# pdm almacena configuraciones de todo el proyecto en .pdm.toml, pero se recomienda no incluirlo
+# en control de versiones.
+# https://pdm.fming.dev/#use-with-ide
+
+#PEP 582; utilizado, por ejemplo, por github.com/David-OConnor/pyflow y github.com/pdm-project/pdm
+
+# Cosas de apio
+
+# Archivos analizados por SageMath
+
+# Ambientes
+
+# Configuración del proyecto Spyder
+
+# Configuración del proyecto de cuerda
+
+# documentación mkdocs
+
+#mipy
+
+# Comprobador de tipo pira
+
+# analizador de tipo estático pytype
+
+# Símbolos de depuración de Cython
+
+#PyCharm
+# La plantilla específica de JetBrains se mantiene en un JetBrains.gitignore separado que puede
+# se encuentra en https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
+# y se puede agregar al gitignore global o fusionar en este archivo. Por una política más nuclear
+# opción (no recomendada), puede descomentar lo siguiente para ignorar toda la carpeta de ideas.
+
+### Parche de Python ###
+# Archivo de configuración local de poesía: https://python-poetry.org/docs/configuration/#local-configuration
+poesía.toml
+
+# fallar
+.ruff_cache/
+
+# archivos de configuración LSP
+pyrightconfig.json
+
+### Entorno virtual ###
+# entorno virtual
+# http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
+[Si bemol]en
+[Incluyo
+[Ll]ib
+[Ll]ib64
+[L]local
+[Ss]cripts
+pyvenv.cfg
+pip-selfcheck.json
