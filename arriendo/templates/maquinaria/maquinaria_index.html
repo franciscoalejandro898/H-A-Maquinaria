@@ -1,1 +1,54 @@
 {% extends "base/base.html" %}
+{% block content %} 
+
+
+<div class="p-3 mb-5 bg-dark rounded-1 table-responsive">
+    <div class="container-fluid py-">
+      <h1 class="display-10 fw-bold text-white">Portal Maquinarias</h1>
+    </div>
+  </div>
+
+<!--Tabla Maquinarias -->
+<div class="card">
+    <div class="card-header p-2 bg-dark text-white table table-auto">
+        <h2 class=" fw-normal fs-3">Maquinarias</h2>
+    </div>
+    <div class="card-body">
+        <h4 class="card-title"></h4>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Tipo Maquina</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Bodega</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="">
+                        <td scope="row">Rodillo</td>
+                        <td>Compactacion suelo</td>
+                        <td>Compactacion</td>
+                        <td>Bodega Coquimbo</td>
+                    </tr>
+                    <tr class="">
+                        <td scope="row">Generador</td>
+                        <td>Energia</td>
+                        <td>Generadores Energeticos</td>
+                        <td>Bodega Barrio industrial</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+    
+</div>
+
+
+
+
+
+{% endblock %}
+
