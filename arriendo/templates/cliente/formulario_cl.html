@@ -1,26 +1,20 @@
 
 
 <form enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    {% for campo in formulario_cl %}
     <div class="mb-3">
-        <label for="nombre" class="form-label">Nombre</label>
-        <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" required>
+        <label for="nombre" class="form-label">{{campo.label}}</label>
+        <input 
+        type="{{campo.field.widget.input_type}}" 
+        class="form-control" 
+        name="{{campo.name}}" 
+        id="" 
+        placeholder="{{campo.label}}" required>
         <small id="nombre-help" class="form-text text-muted">Campo requerido</small>
     </div>
-
-    <div class="mb-3">
-        <label for="apellido" class="form-label">Apellido</label>
-        <input type="text" class="form-control" name="apellido" id="apellido" placeholder="Apellido" required>
-        <small id="apellido-help" class="form-text text-muted">Campo requerido</small>
-    </div>
-
-    <div class="mb-3">
-        <label for="rut" class="form-label">Rut</label>
-        <input type="text" class="form-control" name="rut" id="rut" placeholder="Con puntos y guion" required>
-        <small id="rut-help" class="form-text text-muted">Campo requerido</small>
-    </div>
-
-    <div class="mb-3">
-        <button type="submit" class="btn btn-success">Enviar</button>
-        <button type="reset" class="btn btn-danger">Borrar</button>
+    <div class="col-12 help-text">{{Campo.errors}} </div>
+    {% endfor %}
+<input name="" id="" class="btn btn-success" type="submit" value="Enviar Información">
     </div>
 </form>

@@ -1,6 +1,6 @@
 <form enctype="multipart/form-data" method="post">
     {% csrf_token %}
-    {% for campo in formulario_m %}
+    {% for campo in formulario_arr %}
     <div class="mb-3">
         <label for="{{campo.name}}" class="form-label">{{campo.label}}</label>
         {% if campo.field.choices %}

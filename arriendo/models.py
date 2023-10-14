@@ -30,8 +30,8 @@ class Bodegas(models.Model):
 class Maquinaria(models.Model):
     id_m = models.AutoField(primary_key=True)
     sku = models.CharField(max_length=20)
-    nombre_m = models.CharField(max_length=20)
-    categoria_m = models.ForeignKey(Categorias, on_delete=models.SET_NULL, null=True)
+    nombre_m = models.CharField(max_length=20, verbose_name="Nombre Maquinaria")
+    categoria_m = models.ForeignKey(Categorias, on_delete=models.SET_NULL, null=True, verbose_name="Categorias")
     bodega_m = models.ForeignKey(Bodegas, on_delete=models.SET_NULL, null=True)
 
     def maquinaria(self):
