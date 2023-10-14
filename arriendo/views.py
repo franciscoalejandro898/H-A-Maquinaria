@@ -11,9 +11,21 @@ def login (request):
     return render(request, 'base/login.html')
 
 #VISTA MAQUINARIA
-def maquinaria (request):
-    maquinaria = Maquinaria.objects.all()
-    return render(request, 'maquinaria/maquinaria_index.html', {'maquinarias': maquinaria} )
+#def maquinaria (request):
+#    maquinaria = Maquinaria.objects.all()
+#    return render(request, 'maquinaria/maquinaria_index.html', {'maquinarias': maquinaria} )
+
+def maquinaria(request):
+    maquinarias = Maquinaria.objects.all()
+    arriendos = Arriendos.objects.values_list('maquina_arriendo__id_m', flat=True).distinct()
+    
+    for maquinaria in maquinarias:
+        if maquinaria.id_m in arriendos:
+            maquinaria.estado = "No Disponible"
+    
+    context = {'maquinarias': maquinarias}
+    return render(request, 'maquinaria/maquinaria_index.html', context)
+
 
 #vista Agregar Maquinaria
 def agregar_maquinaria (request): 

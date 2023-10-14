@@ -34,9 +34,8 @@
                         <td>{{ Maquinaria.nombre_m }}</td>
                         <td>{{ Maquinaria.categoria_m }}</td>
                         <td>{{ Maquinaria.bodega_m }}</td>
-                        {% if %}
-                        <td>{{  }}</td>
-                        {% endif %}
+                        <td>{{ Maquinaria.estado }}</td>
+
                         <td>
                             <a href="{% url 'editar_cliente' %}" class="btn btn-info">Editar</a>
                             <a href="{% url 'eliminar_cliente' %}" class="btn btn-danger">Eliminar</a>
@@ -51,9 +50,6 @@
     </div>
     
 </div>
-
-
-
 
 
 {% endblock %}
