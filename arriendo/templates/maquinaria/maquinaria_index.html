@@ -19,25 +19,31 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th scope="col">SKU</th>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Tipo Maquina</th>
                         <th scope="col">Categoria</th>
                         <th scope="col">Bodega</th>
+                        <th scope="col">Estado Maquinaria</th>
+                        <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {% for Maquinaria in maquinarias %}
                     <tr class="">
-                        <td scope="row">Rodillo</td>
-                        <td>Compactacion suelo</td>
-                        <td>Compactacion</td>
-                        <td>Bodega Coquimbo</td>
+                        <td scope="row">{{ Maquinaria.sku }}</td>
+                        <td>{{ Maquinaria.nombre_m }}</td>
+                        <td>{{ Maquinaria.categoria_m }}</td>
+                        <td>{{ Maquinaria.bodega_m }}</td>
+                        {% if %}
+                        <td>{{  }}</td>
+                        {% endif %}
+                        <td>
+                            <a href="{% url 'editar_cliente' %}" class="btn btn-info">Editar</a>
+                            <a href="{% url 'eliminar_cliente' %}" class="btn btn-danger">Eliminar</a>
+                        </td>
+                        
                     </tr>
-                    <tr class="">
-                        <td scope="row">Generador</td>
-                        <td>Energia</td>
-                        <td>Generadores Energeticos</td>
-                        <td>Bodega Barrio industrial</td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import *
 
 
 # Vista principal
@@ -9,18 +10,21 @@ def index (request):
 def login (request):
     return render(request, 'base/login.html')
 
-#vista MAQUINARIA
+#VISTA MAQUINARIA
 def maquinaria (request):
-    return render(request, 'maquinaria/maquinaria_index.html')
+    maquinaria = Maquinaria.objects.all()
+    return render(request, 'maquinaria/maquinaria_index.html', {'maquinarias': maquinaria} )
 
 #vista Agregar Maquinaria
 def agregar_maquinaria (request): 
+    maquinaria = Maquinaria.objects.all()
     return render(request,'maquinaria/agregarmaquinaria.html')
 
 #VISTA CLIENTES
 def clientes (request):
-    return render(request, 'cliente/clientes_index.html')
-
+    clientes = Cliente.objects.all()
+    return render(request, 'cliente/clientes_index.html', {'clientes': clientes})
+ 
 def agregar_cliente (request): 
     return render(request, 'cliente/agregar_cliente.html')
 
@@ -32,7 +36,8 @@ def eliminar_cliente (request):
 
 #vista Arriendo
 def arriendo (request):
-    return render(request, 'arriendo/ver_arriendo.html')
+    arriendos= Arriendos.objects.all()
+    return render(request, 'arriendo/ver_arriendo.html', {'arriendos': arriendos})
 
 def agregar_arriendo (request):
     return render(request, 'arriendo/agregar_arriendo.html')

@@ -12,7 +12,7 @@ class Categorias(models.Model):
    nombre_cat = models.CharField('Tipo de Categoria',max_length=20)
    
    def categorias(self):
-       return "{} {}".format(self.id_cat,self.nombre_cat)
+       return "{}".format(self.nombre_cat)
    
    def __str__(self):
        return self.categorias()
@@ -23,7 +23,7 @@ class Bodegas(models.Model):
     nombre_bod = models.CharField('Nombre Bodega', max_length=30)
     
     def bodegas(self):
-       return "{} {}".format(self.id_bodega,self.nombre_bod)
+       return "{}".format(self.nombre_bod)
     
     def __str__(self):
        return self.bodegas()
@@ -43,9 +43,8 @@ class Maquinaria(models.Model):
     bodega_m = models.ForeignKey(Bodegas, on_delete=models.SET_NULL, null=True)
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='disponible')
 
-   
     def maquinaria(self):
-       return "{} {} {} {} {}".format(self.id_m,self.nombre_m, self.categoria_m, self.bodega_m, self.estado)
+       return "{}".format(self.nombre_m)
    
     def __str__(self):
        return self.maquinaria()
@@ -59,7 +58,7 @@ class Cliente(models.Model):
    telefono = models.CharField( max_length=20)  
    
    def cliente(self):
-       return "{} {} {} {} {}".format(self.id_cliente,self.nombre,self.apellido, self.rut,self.telefono)
+       return "{}".format(self.nombre)
   
    
    def __str__(self):

@@ -10,11 +10,11 @@
 
 
 <div class="card">
-    <div class="card-header p-2 bg-dark text-white">
-        
+    <div class="card-header p-2 bg-dark text-white d-flex justify-content-between">
+    <!-- <div class="card-header p-2 bg-dark text-white">-->
+        <h2 class="fw-normal fs-3">Clientes</h2>
         <a name="" id="" class="btn btn-primary ml-auto" href={% url 'agregar_cliente' %} role="button">Agregar cliente</a>
       
-        <h2 class="fw-normal fs-3">Clientes</h2>
     </div>
     <div class="card-body">
         <h4 class="card-title"></h4>
@@ -30,20 +30,18 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for Cliente in clientes %}   
                     <tr class="">
-                        <td scope="row">Pablo</td>
-                        <td>Videla</td>
-                        <td>18.025.256-3</td>
+                        <td scope="row">{{ Cliente.nombre }}</td>
+                        <td>{{ Cliente.apellido }}</td>
+                        <td>{{ Cliente.rut }}</td>
                         <td>
                             <a href="{% url 'editar_cliente' %}" class="btn btn-info">Editar</a>
                             <a href="{% url 'eliminar_cliente' %}" class="btn btn-danger">Eliminar</a>
                         </td>
                     </tr>
-                    <tr class="">
-                        <td scope="row">Francisco</td> 
-                        <td>Donaire</td>
-                        <td>62.625.325-5</td>
-                    </tr>
+                    {% endfor %}
+                    
                 </tbody>
             </table>
         </div>
