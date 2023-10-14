@@ -17,12 +17,18 @@ def maquinaria (request):
 def agregar_maquinaria (request): 
     return render(request,'maquinaria/agregarmaquinaria.html')
 
-#vista Clientes
+#VISTA CLIENTES
 def clientes (request):
     return render(request, 'cliente/clientes_index.html')
 
 def agregar_cliente (request): 
     return render(request, 'cliente/agregar_cliente.html')
+
+def editar_cliente (request): 
+    return render(request, 'cliente/editar_cliente.html')
+
+def eliminar_cliente (request):
+    return render(request, 'cliente/eliminar_cliente.html')
 
 #vista Arriendo
 def arriendo (request):

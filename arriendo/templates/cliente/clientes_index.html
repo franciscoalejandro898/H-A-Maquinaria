@@ -11,6 +11,9 @@
 
 <div class="card">
     <div class="card-header p-2 bg-dark text-white">
+        
+        <a name="" id="" class="btn btn-primary ml-auto" href={% url 'agregar_cliente' %} role="button">Agregar cliente</a>
+      
         <h2 class="fw-normal fs-3">Clientes</h2>
     </div>
     <div class="card-body">
@@ -22,18 +25,23 @@
                         <th scope="col">Nombre</th>
                         <th scope="col">Apellido</th>
                         <th scope="col">Rut</th>
+                        <th scope="col">Acciones</th>
                         
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="">
-                        <td scope="row">Lomas</td>
-                        <td>Turba</td>
-                        <td>20.025.256-3</td>
+                        <td scope="row">Pablo</td>
+                        <td>Videla</td>
+                        <td>18.025.256-3</td>
+                        <td>
+                            <a href="{% url 'editar_cliente' %}" class="btn btn-info">Editar</a>
+                            <a href="{% url 'eliminar_cliente' %}" class="btn btn-danger">Eliminar</a>
+                        </td>
                     </tr>
                     <tr class="">
-                        <td scope="row">cr7</td>
-                        <td>Messi</td>
+                        <td scope="row">Francisco</td> 
+                        <td>Donaire</td>
                         <td>62.625.325-5</td>
                     </tr>
                 </tbody>
