@@ -1,24 +1,29 @@
-
-
-<form enctype="multipart/form-data" method="post">
+<form enctype="multipart/form-data" method="post" style="margin-top: 3%;">
     {% csrf_token %}
-    {% for campo in formulario_cl %}
-    <div class="mb-3">
-        <label for="nombre" class="form-label">{{campo.label}}</label>
-        <input 
-        type="{{campo.field.widget.input_type}}" 
-        class="form-control" 
-        name="{{campo.name}}" 
-        id="" 
-        placeholder="{{campo.label}}" 
-        value="{{ campo.value | default:'' }}"
-        required>
-        
-        <small id="nombre-help" class="form-text text-muted">Campo requerido</small>
-    </div>
-    <div class="col-12 help-text">{{Campo.errors}} </div>
-    {% endfor %}
-    <input name="" id="" class="btn btn-success" type="submit" value="Enviar Información">
-    <a name="" id="" class="btn btn-danger" href="{% url 'clientes' %}" role="button">Volver a Clientes</a>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                {% for campo in formulario_cl %}
+                <div class="mb-3" style="margin-top: 1%;">
+                    <label for="{{campo.name}}" class="form-label">{{campo.label}}</label>
+                    <input 
+                    type="{{campo.field.widget.input_type}}" 
+                    class="form-control" 
+                    name="{{campo.name}}" 
+                    id="{{campo.name}}" 
+                    placeholder="{{campo.label}}" 
+                    value="{{campo.value | default:''}}"
+                    required>
+                    
+                    <small id="{{campo.name}}-help" class="form-text text-muted">Campo requerido</small>
+                </div>
+                <div class="col-12 help-text">{{campo.errors}} </div>
+                {% endfor %}
+                <div class="mb-3">
+                    <input name="" id="" class="btn btn-success" type="submit" value="Enviar Información">
+                    <a name="" id="" class="btn btn-danger" href="{% url 'clientes' %}" role="button">Volver a Clientes</a>
+                </div>
+            </div>
+        </div>
     </div>
 </form>

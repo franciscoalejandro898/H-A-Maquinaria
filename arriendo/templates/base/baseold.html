@@ -1,49 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <title>Title</title>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %} {% endblock %}</title>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
-  <!-- Bootstrap CSS v5.2.1 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+          integrity="sha512-jdzw3FnXweRK5FqEfAl4RSxHTWw+Bha1eZsOnhXyc24YQLhOcsSzG8xTWIStXWzZXUdAV7qM6RGnHDjWqRD9bQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
     <style>
-      body {
-          background-image: url('/static/img/fondo.jpeg');
-          background-size: cover;
-          background-repeat: no-repeat;
-          min-height: 100vh; /* Asegura que el contenido cubra al menos toda la altura de la pantalla. */
-          position: relative; /* Permite posicionar elementos de forma relativa. */
-          margin: 0;
-          padding: 0;
-      }
+        body {
+            background-image: url('/static/img/fondo.jpeg');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
 
-      .content {
-          padding-bottom: 60px; /* Ajusta el espacio inferior para el pie de página. */
-      }
+        .card {
+            margin-top: 4cm;
+        }
 
-      .card {
-          margin-top: 3%; /* Espacio superior para el formulario. */
-      }
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            background-color: white;
+            color: black;
 
-      footer {
-          position: Relative;
-          bottom: 0;
-          width: 100%;
-          height: 60px;
-          background-color: white;
-          color: black;
-      }
-  </style>
+        }
+    </style>
+
+    {% block extra_css %}
+    {% endblock %}
 </head>
 
 <body>
-  <header>
-    <!-- place navbar here -->
+<header>
     <nav class="navbar navbar-expand-sm navbar-light bg-light" style="width: 100%";>
         <div class="container"  style="margin-left: 16px";>
             <a class="navbar-brand" href="{% url 'home' %}">H&A</a>
@@ -100,36 +98,57 @@
             </div>
         </div>
     </nav>
-  </header>
-  <main>
-    {% block content %} {% endblock %}
-  </main>
 
-  <!-- Bootstrap JavaScript Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
-  </script>
+</header>
+{% block content %} {% endblock %}
+<main>
+<!--
+    <div class="card text-center">
+        <div class="card-body">
+            <p class="card-text">
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
-    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
-  </script>
-</body>
-<footer class="bg-dark text-center text-white py-1  fixed-bottom sticky-fixed">
-  <div class="container">
-      <div class="row d-flex align-items-center justify-content-center">
-          <div class="col-12 text-center">
-              <div style="margin-top: -30px;">
-                  <a href="https://github.com/tuusuario" class="text-white mx-3">
-                      <i class="fab fa-github fa-2x"></i>
-                  </a>
-                  <a href="https://www.instagram.com/tuusuario/" class="text-white mx-3">
-                      <i class="fab fa-instagram fa-2x"></i>
-                  </a>
-              </div>
-              <p class="my-2">Francisco Donaire | © Todos Los Derechos Reservados</p>
-          </div>
-      </div>
-  </div>
+            </p>
+        </div>
+    </div>
+-->
+</main>
 
+
+<footer class="bg-dark text-white py-5">
+    <div class="container">
+        <div class="row d-flex align-items-center justify-content-center">
+            <div class="col-12 text-center">
+                <div style="margin-top: -30px;">
+                    <a href="https://github.com/tuusuario" class="text-white mx-3">
+                        <i class="fab fa-github fa-2x"></i>
+                    </a>
+                    <a href="https://www.instagram.com/tuusuario/" class="text-white mx-3">
+                        <i class="fab fa-instagram fa-2x"></i>
+                    </a>
+                </div>
+                <p class="my-2">Francisco Donaire | © Todos Los Derechos Reservados</p>
+            </div>
+        </div>
+    </div>
 </footer>
+
+
+
+
+
+{% block extra_footer %}
+{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+        crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+
 </html>
