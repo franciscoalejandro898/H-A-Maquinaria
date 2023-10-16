@@ -1,6 +1,6 @@
 {% extends "base/base.html" %}
-{% block content %} 
 
+{% block content %} 
 
 <div class="p-3 mb-5 bg-dark rounded-1">
     <div class="container-fluid py-">
@@ -42,8 +42,8 @@
                         {% endif %}
                         <td>{{ Arriendos.fecha_arriendo }}</td>
                         <td>
-                            <a href="{% url 'editar_cliente' %}" class="btn btn-info">Editar</a>
-                            <a href="{% url 'eliminar_cliente' %}" class="btn btn-danger">Eliminar</a>
+                            <a href="{% url 'editar_arriendo' Arriendos.id_arriendo %}" class="btn btn-info">Editar</a>
+                            <a href="{% url 'eliminar_arriendo' Arriendos.id_arriendo %}" class="btn btn-danger">Eliminar</a>
                         </td>
                     </tr>
                     {% endfor %}
