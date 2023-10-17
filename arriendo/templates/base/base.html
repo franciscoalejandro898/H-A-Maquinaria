@@ -16,7 +16,7 @@
 
     <style>
         body {
-            background-image: url('/static/img/IMG_9759.JPG');
+            background-image: url('/static/img/fondodef.JPG');
             background-size: cover;
             background-repeat: no-repeat;
          
@@ -71,6 +71,7 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="{% url 'home' %}" aria-current="page">Inicio<span class="visually-hidden">(current)</span></a>
                     </li>
+                    
                     {% if user.is_authenticated %}
                     <!-- Clientes Navbar -->
                     <li class="nav-item dropdown">
@@ -103,8 +104,7 @@
                             <a class="dropdown-item" href={% url 'agregar_maquinaria' %}>Agregar</a>
                         </div>
                     </li>
-
-                               
+       
                     {% endif %}
                     <!-- Maquinaria Navbar -->
                 </ul>

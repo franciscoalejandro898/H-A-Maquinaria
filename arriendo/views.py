@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
-from django.contrib.auth.views import LoginView
+#from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 
 
