@@ -1,16 +1,20 @@
 {% extends "base/base.html" %}
 
 {% block content %} 
-<body class="bg-dark">
-    <div class="container">
+<body class="bg-dark" >
+    <div class="container" >
         <div class="row justify-content-center mt-5">
             <div class="col-md-6">
-                <div class="card bg-dark text-white">
+                <div class="card bg-dark text-white mt-3 ">
                     <div class="card-header bg-warning text-dark text-center">
                         <h3>Iniciar Sesión</h3>
                     </div>
-                    <div class="card-body">
-                        <form>
+                    <div class="card-body" style="margin-top: 1px;">
+
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{ form }}
+
                             <div class="mb-3">
                                 <label for="usuario" class="form-label text-white">Usuario :</label>
                                 <input type="text" class="form-control" id="usuario" name="usuario" required>
