@@ -3,7 +3,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-#Tabla Categorias
+    #Tabla Categorias
 class Categorias(models.Model):
    id_cat = models.AutoField('Id Categoria',primary_key=True)
    nombre_cat = models.CharField('Tipo de Categoria',max_length=20)
@@ -42,8 +42,6 @@ class Maquinaria(models.Model):
     
     def __str__(self):
         return self.maquinaria()
-
-   
 
    
     #Tabla Cliente
