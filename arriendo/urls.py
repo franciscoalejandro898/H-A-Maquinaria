@@ -28,5 +28,8 @@ urlpatterns = [
     path("arriendo/", views.arriendo, name="arriendo"),
     path("agregar_arriendo/", views.agregar_arriendo, name="agregar_arriendo"),   
     path("eliminar_arriendo/<int:id_arriendo>", views.eliminar_arriendo, name="eliminar_arriendo"),  
-    path("editar_arriendo/<int:id_arriendo>", views.editar_arriendo, name="editar_arriendo"),    
+    path("editar_arriendo/<int:id_arriendo>", views.editar_arriendo, name="editar_arriendo"),  
+    
+    #URL GRAFICOS
+    path('grafico-arriendos/', views.grafico_arriendos, name='grafico_arriendos'),  
 ]

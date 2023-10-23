@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+{% block content %} 
+
+<div id="grafico-container" style="width: 600px; height: 400px; background-color: white; text-align: center;"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.0.0/dist/echarts.min.js"></script>
+    <script type="text/javascript">
+        var datos = {{ datos|safe }};
+
+        var myChart = echarts.init(document.getElementById('grafico-container'));
+        var option = {
+            title: {
+                text: 'Arriendos por Categoría de Maquinaria',
+            },
+            xAxis: {
+                type: 'category',
+                data: datos.map(function(item) {
+                    return item.nombre;
+                }),
+                axisLabel: {
+                    show: true, // Esto mostrará las etiquetas en el eje X
+                }
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                data: datos.map(function(item) {
+                    return item.cantidad;
+                }),
+                type: 'bar'
+            }]
+        };
+        myChart.setOption(option);
+    </script>
+{% endblock %}

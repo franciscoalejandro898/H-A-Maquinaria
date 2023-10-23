@@ -3,6 +3,7 @@ from .models import *
 from .forms import *
 #from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
+import json
 
 
 # Vista principal
@@ -110,3 +111,22 @@ def editar_arriendo (request, id_arriendo):
             formulario_arr.save()
             return redirect('arriendo')
     return render(request, 'arriendo/editar_arriendo.html', {'formulario_arr': formulario_arr})
+
+#Vista Graficos Arriendo
+
+
+def grafico_arriendos(request):
+    # Recopila los datos de la base de datos
+    categorias = Categorias.objects.all()
+    datos = []
+    for categoria in categorias:
+        arriendos_categoria = Arriendos.objects.filter(maquina_arriendo__categoria_m=categoria)
+        datos.append({
+            "nombre": categoria.nombre_cat,
+            "cantidad": arriendos_categoria.count()
+        })
+    
+    # Convierte datos a una cadena JSON válida
+    datos_json = json.dumps(datos)
+    
+    return render(request, 'graficas/index_graf.html', {'datos': datos_json})
