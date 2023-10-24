@@ -4,6 +4,7 @@ from .forms import *
 #from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 import json
+from django.core.paginator import Paginator
 
 
 # Vista principal
@@ -12,7 +13,7 @@ def index (request):
 
 # Vista login
 #def login (request):
-    template_name = 'registration/login.html'  # Ruta a tu plantilla personalizada de inicio de sesión
+    template_name = 'registration/login.html'  # 
 
 
 #VISTA VER MAQUINARIA
@@ -56,9 +57,14 @@ def editar_maquinaria (request, id_m):
 
 #VISTA CLIENTES
 @login_required
-def clientes (request):
+def clientes(request):
     clientes = Cliente.objects.all()
-    return render(request, 'cliente/clientes_index.html', {'clientes': clientes})
+    paginator = Paginator(clientes, 5)  # 5 registros por página
+
+    page = request.GET.get('page')
+    clientes_paginados = paginator.get_page(page)
+
+    return render(request, 'cliente/clientes_index.html', {'clientes': clientes_paginados})
  
 @login_required
 def agregar_cliente (request): 

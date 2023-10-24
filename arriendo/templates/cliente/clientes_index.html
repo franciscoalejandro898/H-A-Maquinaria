@@ -1,20 +1,16 @@
 {% extends "base/base.html" %}
 {% block content %} 
 
-
 <div class="p-3 mb-5 bg-dark rounded-1">
     <div class="container-fluid py-">
       <h1 class="display-10 fw-bold text-white">Portal Clientes</h1>
     </div>
-  </div>
-
+</div>
 
 <div class="card">
     <div class="card-header p-2 bg-dark text-white d-flex justify-content-between">
-    <!-- <div class="card-header p-2 bg-dark text-white">-->
         <h2 class="fw-normal fs-3">Clientes</h2>
-        <a name="" id="" class="btn btn-primary ml-auto" href={% url 'agregar_cliente' %} role="button">Agregar cliente</a>
-      
+        <a name="" id="" class="btn btn-primary ml-auto" href="{% url 'agregar_cliente' %}" role="button">Agregar cliente</a>
     </div>
     <div class="card-body">
         <h4 class="card-title"></h4>
@@ -42,18 +38,28 @@
                         </td>
                     </tr>
                     {% endfor %}
-                    
                 </tbody>
             </table>
         </div>
         
-    </div>
+        <div class="pagination">
+            <span class="step-links">
+                {% if clientes.has_previous %}
+                    <a href="?page=1">&laquo; primera</a>
+                    <a href="?page={{ clientes.previous_page_number }}">anterior</a>
+                {% endif %}
     
+                <span class="current-page">
+                    Página {{ clientes.number }} de {{ clientes.paginator.num_pages }}.
+                </span>
+    
+                {% if clientes.has_next %}
+                    <a href="?page={{ clientes.next_page_number }}">siguiente</a>
+                    <a href="?page={{ clientes.paginator.num_pages }}">última &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
 </div>
 
-
-
-
-
 {% endblock %}
-
