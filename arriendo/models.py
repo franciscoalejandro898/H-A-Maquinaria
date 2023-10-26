@@ -50,7 +50,7 @@ class Cliente(models.Model):
    nombre = models.CharField( max_length=20)
    apellido = models.CharField( max_length=20)
    rut = models.CharField(max_length=40)
-   telefono = models.CharField( max_length=20)  
+   telefono = models.CharField( max_length=20)
    
    def cliente(self):
        return "{}".format(self.nombre)
