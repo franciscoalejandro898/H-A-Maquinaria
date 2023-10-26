@@ -64,7 +64,7 @@ class Arriendos(models.Model):
     id_arriendo = models.AutoField(primary_key=True, blank=False)
     maquina_arriendo = models.ForeignKey(Maquinaria, on_delete=models.SET_NULL,null=True, blank=False)
     cliente_arriendo = models.ForeignKey(Cliente, on_delete=models.SET_NULL,null=True, blank=False)
-    bodega_arriendo = models.ForeignKey(Bodegas, on_delete=models.SET_NULL,null=True, blank=False)
+    bodega_arriendo = models.ForeignKey(Bodegas, on_delete=models.SET_NULL,null=True, blank=False) 
     fecha_arriendo = models.DateField(null=False, blank=False)
     
     def arriendo(self):
