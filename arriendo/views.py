@@ -118,11 +118,10 @@ def editar_arriendo (request, id_arriendo):
             return redirect('arriendo')
     return render(request, 'arriendo/editar_arriendo.html', {'formulario_arr': formulario_arr})
 
+
 #Vista Graficos Arriendo
-
-
 def grafico_arriendos(request):
-    # Recopila los datos de la base de datos
+    # Recopila los datos 
     categorias = Categorias.objects.all()
     datos = []
     for categoria in categorias:
@@ -132,7 +131,7 @@ def grafico_arriendos(request):
             "cantidad": arriendos_categoria.count()
         })
     
-    # Convierte datos a una cadena JSON válida
+    # Convierte datos a JSON 
     datos_json = json.dumps(datos)
     
     return render(request, 'graficas/index_graf.html', {'datos': datos_json})
