@@ -26,7 +26,10 @@
                         <th scope="col">Maquina</th>
                         <th scope="col">Cliente</th>
                         <th scope="col">Bodega</th>
-                        <th scope="col">fecha</th>
+                        <th scope="col">fecha inicio</th>
+                        <th scope="col">fecha entrega</th>
+                        <th scope="col">Días de arriendo</th>
+                        <th scope="col">Costo Total</th>
                         <th scope="col">Acciones</th>
                         
                     </tr>
@@ -40,7 +43,10 @@
                         {% if Arriendos.maquina_arriendo %}
                             <td>{{ Arriendos.maquina_arriendo.bodega_m.nombre_bod }}</td>
                         {% endif %}
-                        <td>{{ Arriendos.fecha_arriendo }}</td>
+                        <td>{{ Arriendos.fecha_inicio }}</td>
+                        <td>{{ Arriendos.fecha_entrega }}</td>
+                        <td>{{ Arriendos.dias_arriendo }}</td>
+                        <td>{{ Arriendos.costo_total }}</td>
                         <td>
                             <a href="{% url 'editar_arriendo' Arriendos.id_arriendo %}" class="btn btn-info">Editar</a>
                             <a href="{% url 'eliminar_arriendo' Arriendos.id_arriendo %}" class="btn btn-danger">Eliminar</a>

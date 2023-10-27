@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -29,10 +29,11 @@ class Bodegas(models.Model):
 
 class Maquinaria(models.Model):
     id_m = models.AutoField(primary_key=True)
-    sku = models.CharField(max_length=20)
+    sku = models.IntegerField(unique=True)
     nombre_m = models.CharField(max_length=20, verbose_name="Nombre Maquinaria")
     categoria_m = models.ForeignKey(Categorias, on_delete=models.SET_NULL, null=True, verbose_name="Categorias")
     bodega_m = models.ForeignKey(Bodegas, on_delete=models.SET_NULL, null=True)
+    valor_dia = models.DecimalField(max_digits=10, decimal_places=2)
 
     def maquinaria(self):
         return "{}".format(self.nombre_m)
@@ -47,35 +48,45 @@ class Maquinaria(models.Model):
     #Tabla Cliente
 class Cliente(models.Model):
    id_cliente = models.AutoField(primary_key=True)
-   nombre = models.CharField( max_length=20)
-   apellido = models.CharField( max_length=20)
-   rut = models.CharField(max_length=40)
-   telefono = models.CharField( max_length=20)
+   rut_empresa = models.IntegerField(unique=True)
+   razon_social = models.CharField( max_length=30)
+   direccion_empresa = models.CharField( max_length=30)
+   nombre_representante = models.CharField( max_length=30)
+   apellido_representante = models.CharField( max_length=20)
+   telefono = models.IntegerField(unique=True)
+   correo_empresa = models.EmailField(default="")
    
    def cliente(self):
-       return "{}".format(self.nombre)
+       return "{}".format(self.razon_social)
   
    
    def __str__(self):
        return self.cliente()
    
     #Tabla Arriendos 
-class Arriendos(models.Model): 
+class Arriendos(models.Model):
     id_arriendo = models.AutoField(primary_key=True, blank=False)
-    maquina_arriendo = models.ForeignKey(Maquinaria, on_delete=models.SET_NULL,null=True, blank=False)
-    cliente_arriendo = models.ForeignKey(Cliente, on_delete=models.SET_NULL,null=True, blank=False)
-    bodega_arriendo = models.ForeignKey(Bodegas, on_delete=models.SET_NULL,null=True, blank=False) 
-    fecha_arriendo = models.DateField(null=False, blank=False)
-    
-    def arriendo(self):
-       return "{} {} {} {} {}".format(self.id_arriendo,self.maquina_arriendo, self.cliente_arriendo, self.bodega_arriendo,self.fecha_arriendo)
+    maquina_arriendo = models.ForeignKey(Maquinaria, on_delete=models.SET_NULL, null=True, blank=False)
+    cliente_arriendo = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True, blank=False)
+    bodega_arriendo = models.ForeignKey(Bodegas, on_delete=models.SET_NULL, null=True, blank=False)
+    fecha_inicio = models.DateField()
+    fecha_entrega = models.DateField(null=True, blank=True)
+    dias_arriendo = models.IntegerField(blank=True, null=True)
+    costo_total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     
     def __str__(self):
-       return self.arriendo()
+        return f"ID: {self.id_arriendo} - Maquinaria: {self.maquina_arriendo.nombre_m} - Cliente: {self.cliente_arriendo.razon_social} -"
+
+    def save(self, *args, **kwargs):
+        # Calcular la duración del arriendo y el costo total
+        if self.fecha_entrega and self.fecha_inicio:
+            self.dias_arriendo = (self.fecha_entrega - self.fecha_inicio).days
+            self.costo_total = self.dias_arriendo * self.maquina_arriendo.valor_dia
+        super(Arriendos, self).save(*args, **kwargs)
    
-@receiver(post_save, sender=Arriendos)
-def actualizar_estado_maquinaria(sender, instance, **kwargs):
+#@receiver(post_save, sender=Arriendos)
+#def actualizar_estado_maquinaria(sender, instance, **kwargs):
     # Verifica si la maquinaria asociada al arriendo está en la instancia
-   if instance.maquina_arriendo:
-      instance.maquina_arriendo.estado = "No Disponible"
-      instance.maquina_arriendo.save()
+   #if instance.maquina_arriendo:
+      #instance.maquina_arriendo.estado = "No Disponible"
+      #instance.maquina_arriendo.save()

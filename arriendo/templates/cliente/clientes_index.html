@@ -28,9 +28,9 @@
                 <tbody>
                     {% for Cliente in clientes %}   
                     <tr class="">
-                        <td scope="row">{{ Cliente.nombre }}</td>
-                        <td>{{ Cliente.apellido }}</td>
-                        <td>{{ Cliente.rut }}</td>
+                        <td scope="row">{{ Cliente.razon_social }}</td>
+                        <td>{{ Cliente.apellido_representante }}</td>
+                        <td>{{ Cliente.rut_empresa }}</td>
                         <td>{{ Cliente.telefono }}</td>
                         <td>
                             <a href="{% url 'editar_cliente' Cliente.id_cliente %}" class="btn btn-info">Editar</a>
