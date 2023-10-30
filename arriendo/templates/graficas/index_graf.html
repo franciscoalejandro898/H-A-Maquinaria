@@ -87,39 +87,35 @@
     </div>
 
     <div class="div3"> 
-        <div id="grafico-container3" style="width: 100%; height: 100%; background-color: white; text-align: center;"></div> 
-        <script type="text/javascript">
-            // Asegúrate de que los datos tengan un nombre único, como datos3
-            var datos3 = {{ datos|safe }};
-    
-            var myChart3 = echarts.init(document.getElementById('grafico-container3'));
-            var option3 = {
-                title: {
-                    text: 'Arriendos por Categoría de Maquinaria',
-                },
-                xAxis: {
-                    type: 'category',
-                    data: datos3.map(function(item) {
-                        return item.nombre;
-                    }),
-                    axisLabel: {
-                        show: true, // Esto mostrará las etiquetas en el eje X
-                    }
-                },
-                yAxis: {
-                    type: 'value'
-                },
-                series: [{
-                    data: datos3.map(function(item) {
-                        return item.cantidad;
-                    }),
-                    type: 'bar'
-                }]
-            };
-            myChart3.setOption(option3);
-        </script>
-    </div>
+        <div id="grafico-container3" style="width: 100%; height: 100%; background-color: white; text-align: center;"></div>
+<script type="text/javascript">
+    var datos2 = {{ datos|safe }};
 
+    var myChart2 = echarts.init(document.getElementById('grafico-container3'));
+    var option2 = {
+        title: {
+            text: 'Arriendos por Categoría de Maquinaria',
+        },
+        series: [{
+            name: 'Categoría de Maquinaria',
+            type: 'pie', 
+            radius: '60%',
+            data: datos2.map(function(item) {
+                return {
+                    name: item.nombre,
+                    value: item.cantidad
+                };
+            }),
+            label: {
+                show: true,
+                formatter: '{b}: {c}' 
+            }
+        }]
+    };
+
+    myChart2.setOption(option2);
+</script>
+    </div>
     <div class="div4"> 
         <div id="grafico-container4" style="width: 100%; height: 100%; background-color: white; text-align: center;"></div> 
         <script type="text/javascript">

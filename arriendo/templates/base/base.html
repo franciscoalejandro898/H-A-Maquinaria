@@ -16,7 +16,7 @@
 
     <style>
         body {
-            background-image: url('/static/img/fondodef.JPG');
+            background-image: url('/static/img/fondosin_editar.JPG');
             background-size: cover;
             background-repeat: no-repeat;
          
@@ -107,14 +107,10 @@
                         </div>
                     </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">Dashboard</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownId">
-                            <a class="dropdown-item" href={% url 'grafico_arriendos' %}>Ver</a>
-                            
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href={% url 'grafico_arriendos' %}>Dashboard</a>
                     </li>
+                    
 
                     
        
