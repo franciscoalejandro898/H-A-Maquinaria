@@ -5,6 +5,8 @@ from .forms import *
 from django.contrib.auth.decorators import login_required
 import json
 from django.core.paginator import Paginator
+from django.db.models import Sum
+from django.http import JsonResponse
 
 
 # Vista principal
@@ -59,7 +61,7 @@ def editar_maquinaria (request, id_m):
 @login_required
 def clientes(request):
     clientes = Cliente.objects.all()
-    paginator = Paginator(clientes, 5)  # 5 registros por página
+    paginator = Paginator(clientes, 4)  # 5 registros por página
 
     page = request.GET.get('page')
     clientes_paginados = paginator.get_page(page)
@@ -134,4 +136,16 @@ def grafico_arriendos(request):
     # Convierte datos a JSON 
     datos_json = json.dumps(datos)
     
-    return render(request, 'graficas/index_graf.html', {'datos': datos_json})
+    return render(request, 'graficas/dashboard.html', {'datos': datos_json})
+
+#def arriendos_chart(request):
+    # Obtén los datos de costo total por categoría de maquinaria
+    data = Arriendos.objects.values('maquina_arriendo__categoria__nombre').annotate(total_cost=Sum('costo_total'))
+
+    chart_data = []
+    for item in data:
+        category = item['maquina_arriendo__categoria_m_nombre']
+        cost = item['total_cost']
+        chart_data.append({'name': category, 'y': cost})
+
+    return JsonResponse(chart_data, safe=False)

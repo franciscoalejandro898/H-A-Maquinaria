@@ -66,12 +66,12 @@ class Cliente(models.Model):
     #Tabla Arriendos 
 class Arriendos(models.Model):
     id_arriendo = models.AutoField(primary_key=True, blank=False)
-    maquina_arriendo = models.ForeignKey(Maquinaria, on_delete=models.SET_NULL, null=True, blank=False)
-    cliente_arriendo = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True, blank=False)
-    bodega_arriendo = models.ForeignKey(Bodegas, on_delete=models.SET_NULL, null=True, blank=False)
+    maquina_arriendo = models.ForeignKey(Maquinaria, on_delete=models.SET_NULL, null=True, blank=False, verbose_name="Maquinaria")
+    cliente_arriendo = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True, blank=False, verbose_name="Cliente")
+    bodega_arriendo = models.ForeignKey(Bodegas, on_delete=models.SET_NULL, null=True, blank=False, verbose_name="Bodega")
     fecha_inicio = models.DateField()
     fecha_entrega = models.DateField(null=True, blank=True)
-    dias_arriendo = models.IntegerField(blank=True, null=True)
+    dias_arriendo = models.IntegerField(blank=True, null=True, verbose_name="Cantidad de días")
     costo_total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     
     def __str__(self):

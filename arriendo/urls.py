@@ -31,5 +31,8 @@ urlpatterns = [
     path("editar_arriendo/<int:id_arriendo>", views.editar_arriendo, name="editar_arriendo"),  
     
     #URL GRAFICOS
-    path('grafico-arriendos/', views.grafico_arriendos, name='grafico_arriendos'),  
+    path('grafico-arriendos/', views.grafico_arriendos, name='grafico_arriendos'),
+    #path('grafico-arriendo/', views.arriendos_chart, name='grafico_arriendo'),
+    
+    
 ]

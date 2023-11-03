@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ES">
 
 <head>
     <title>{% block title %} {% endblock %}</title>
@@ -29,7 +29,7 @@
         main {
             flex-grow: 1;
             padding: 1.5%;
-            padding-top: 0.5%;
+            padding-top: 0.4%;
             margin-bottom: 0%;
             height: 100%;
             
@@ -37,7 +37,7 @@
         }
 
         .card {
-            margin-top: 4cm;
+            margin-top: 1%;
         }
 
         footer {
@@ -61,6 +61,7 @@
 <body>
 <header>
     <nav class="navbar navbar-expand-sm navbar-light bg-light" style="width: 100%";>
+        
         <div class="container"  style="margin-left: 16px";>
             <a class="navbar-brand" href="{% url 'home' %}">H&A</a>
             <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
@@ -68,6 +69,8 @@
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            
+            
             <div class="collapse navbar-collapse" id="collapsibleNavId">
                 <ul class="navbar-nav me-auto mt-2 mt-lg-0 ml-1">
                     <li class="nav-item">
@@ -118,13 +121,19 @@
                     <!-- Maquinaria Navbar -->
                 </ul>
                 <!-- Buscador Navbar -->
-                <!--form class="d-flex my-2 my-lg-0">
-                    <input class="form-control me-sm-2" type="text" placeholder="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form-->
+                
+                    
+                
                 <!-- Buscador Navbar -->
             </div>
+        
         </div>
+        {% if user.is_authenticated %}
+        <div style="margin-right: 1.5%">
+            <a href="{% url 'logout' %}" class="btn btn-danger btn-lg mr-5">Cerrar Sesión</a>
+        </div>
+        {% endif %}
+
     </nav>
 
 </header>

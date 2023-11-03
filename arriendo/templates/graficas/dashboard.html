@@ -1,0 +1,144 @@
+{% extends 'base/base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<div class="container">
+<script src="https://code.highcharts.com/dashboards/dashboards.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/dashboards/modules/dashboards-plugin.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.highcharts.com/css/highcharts.css">
+<link rel="stylesheet" type="text/css" href="https://code.highcharts.com/dashboards/css/dashboards.css">
+<div class="container">
+  
+{% block content %}
+<style>
+    .parent {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        grid-column-gap: 1.5%;
+        grid-row-gap: 1.5%;
+        min-height: 100vh;
+        }
+        
+        .div1 { grid-area: 1 / 1 / 2 / 3; }
+        .div2 { grid-area: 2 / 1 / 4 / 2; }
+        .div3 { grid-area: 2 / 2 / 4 / 3; }
+        .div4 { grid-area: 4 / 1 / 6 / 2; }
+        .div5 { grid-area: 4 / 2 / 6 / 3; }
+</style>
+ <div class="parent">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <div class="div1" style="background: #212529; border: 3px solid #808080; height: 100px;">
+        <h1 style="padding-left: 1%; color: white; text-align: center; line-height: 100px; height: 100px;">Dashboard</h1>
+    </div>
+    
+    
+    <div class="div2" style="text-align: center;">
+            <div id="grafico-container1" style="width: 100%; height: 100%; border: 3px solid #808080; background-color: white; text-align: center;"></div> 
+        <script type="text/javascript">
+            var datos1 = {{ datos|safe }};
+    
+            var myChart1 = echarts.init(document.getElementById('grafico-container1'));
+            var option1 = {
+                title: {
+                    text: 'Arriendos por Categoría de Maquinaria',
+                },
+                xAxis: {
+                    type: 'category',
+                    data: datos1.map(function(item) {
+                        return item.nombre;
+                    }),
+                    axisLabel: {
+                        show: true, // Esto mostrará las etiquetas en el eje X
+                        interval: 0,
+                    }
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: datos1.map(function(item) {
+                        return item.cantidad;
+                    }),
+                    type: 'bar'
+                }]
+            };
+            myChart1.setOption(option1);
+        </script>
+        </div>
+    <div class="div3" style="background: black" > 
+        <div id="grafico-container2" style="width: 100%; height: 100%; background-color: white; border: 3px solid #808080; text-align: center;"></div>
+        <script type="text/javascript">
+            var datos2 = {{ datos|safe }};
+
+            var myChart2 = echarts.init(document.getElementById('grafico-container2'));
+            var option2 = {
+            title: {
+            text: 'Arriendos por Categoría de Maquinaria',
+            },
+            series: [{
+                name: 'Categoría de Maquinaria',
+                type: 'pie', 
+                radius: '60%',
+                data: datos2.map(function(item) {
+                return {
+                    name: item.nombre,
+                    value: item.cantidad
+                };
+            }),
+            label: {
+                show: true,
+                formatter: '{b}: {c}' 
+            }
+        }]
+        };
+
+        myChart2.setOption(option2);
+        </script>
+    </div>
+
+
+    <div class="div4" style="background: white; border: 3px solid #808080; ">
+       <div id="container"></div>
+    </div>
+    
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            $.ajax({
+                url: '#',
+                dataType: 'json',
+                success: function (data) {
+                    Highcharts.chart('container', {
+                        chart: {
+                            type: 'pie'
+                        },
+                        title: {
+                            text: 'Costos totales de arriendos por categoría de maquinaria'
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '<b>{point.name}</b>: {point.y:.2f} %'
+                                }
+                            }
+                        },
+                        series: [{
+                            name: 'Costo Total',
+                            data: data
+                        }]
+                    });
+                }
+            });
+        });
+    </script>
+    
+    <div class="div5" style="background: white; border: 3px solid #808080;"> </div>
+</div>
+    
+{% endblock %}

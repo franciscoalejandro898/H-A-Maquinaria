@@ -18,20 +18,24 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Apellido</th>
-                        <th scope="col">Rut</th>
+                        <th scope="col">Rut Empresa</th>
+                        <th scope="col">Razón social</th>
+                        <th scope="col">Dirección Empresa</th>
+                        <th scope="col">Representante</th>
                         <th scope="col">Telefono</th>
-                        <th scope="col">Acciones</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for Cliente in clientes %}   
                     <tr class="">
-                        <td scope="row">{{ Cliente.razon_social }}</td>
-                        <td>{{ Cliente.apellido_representante }}</td>
-                        <td>{{ Cliente.rut_empresa }}</td>
+                        <td scope="row">{{ Cliente.rut_empresa }}</td>
+                        <td>{{ Cliente.razon_social }}</td>
+                        <td>{{ Cliente.direccion_empresa }}</td>
+                        <td>{{ Cliente.nombre_representante }} {{ Cliente.apellido_representante }}</td>
                         <td>{{ Cliente.telefono }}</td>
+                        <td>{{ Cliente.correo_empresa }}</td>
                         <td>
                             <a href="{% url 'editar_cliente' Cliente.id_cliente %}" class="btn btn-info">Editar</a>
                             <a href="{% url 'eliminar_cliente' Cliente.id_cliente %}" class="btn btn-danger">Eliminar</a>
