@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.db.models.signals import post_save
+from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
     #Tabla Categorias
@@ -72,17 +73,20 @@ class Arriendos(models.Model):
     fecha_inicio = models.DateField()
     fecha_entrega = models.DateField(null=True, blank=True)
     dias_arriendo = models.IntegerField(blank=True, null=True, verbose_name="Cantidad de días")
-    costo_total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    costo_total = models.DecimalField(max_digits=20, decimal_places=0, blank=True, null=True)
     
     def __str__(self):
-        return f"ID: {self.id_arriendo} - Maquinaria: {self.maquina_arriendo.nombre_m} - Cliente: {self.cliente_arriendo.razon_social} -"
-
+        # Formatea el costo_total como pesos chilenos con símbolo "$" y punto como separador de miles
+        costo_total_formateado = f"${self.costo_total:,.0f}".replace(",", ".")
+        return f"ID: {self.id_arriendo} - Maquinaria: {self.maquina_arriendo.nombre_m} - Cliente: {self.cliente_arriendo.razon_social} - Costo Total: {costo_total_formateado}"
+    
     def save(self, *args, **kwargs):
         # Calcular la duración del arriendo y el costo total
         if self.fecha_entrega and self.fecha_inicio:
             self.dias_arriendo = (self.fecha_entrega - self.fecha_inicio).days
             self.costo_total = self.dias_arriendo * self.maquina_arriendo.valor_dia
         super(Arriendos, self).save(*args, **kwargs)
+    
    
 #@receiver(post_save, sender=Arriendos)
 #def actualizar_estado_maquinaria(sender, instance, **kwargs):

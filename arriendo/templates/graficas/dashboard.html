@@ -1,6 +1,7 @@
 {% extends 'base/base.html' %}
 
 {% block title %} Dashboard {% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <div class="container">
 <script src="https://code.highcharts.com/dashboards/dashboards.js"></script>
@@ -29,116 +30,200 @@
 </style>
  <div class="parent">
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
-    <div class="div1" style="background: #212529; border: 3px solid #808080; height: 100px;">
+    <div class="div1" style="background: #212529; height: 100px; border-radius: 10px;">
         <h1 style="padding-left: 1%; color: white; text-align: center; line-height: 100px; height: 100px;">Dashboard</h1>
-    </div>
-    
-    
-    <div class="div2" style="text-align: center;">
-            <div id="grafico-container1" style="width: 100%; height: 100%; border: 3px solid #808080; background-color: white; text-align: center;"></div> 
-        <script type="text/javascript">
-            var datos1 = {{ datos|safe }};
-    
-            var myChart1 = echarts.init(document.getElementById('grafico-container1'));
-            var option1 = {
-                title: {
-                    text: 'Arriendos por Categoría de Maquinaria',
-                },
-                xAxis: {
-                    type: 'category',
-                    data: datos1.map(function(item) {
-                        return item.nombre;
-                    }),
-                    axisLabel: {
-                        show: true, // Esto mostrará las etiquetas en el eje X
-                        interval: 0,
-                    }
-                },
-                yAxis: {
-                    type: 'value'
-                },
-                series: [{
-                    data: datos1.map(function(item) {
-                        return item.cantidad;
-                    }),
-                    type: 'bar'
-                }]
-            };
-            myChart1.setOption(option1);
-        </script>
-        </div>
-    <div class="div3" style="background: black" > 
-        <div id="grafico-container2" style="width: 100%; height: 100%; background-color: white; border: 3px solid #808080; text-align: center;"></div>
-        <script type="text/javascript">
-            var datos2 = {{ datos|safe }};
+        <!--a id="download-pdf-button" class="btn btn-primary" href="javascript:void(0)">Descargar En PDF</a>-->
 
-            var myChart2 = echarts.init(document.getElementById('grafico-container2'));
-            var option2 = {
-            title: {
-            text: 'Arriendos por Categoría de Maquinaria',
-            },
-            series: [{
-                name: 'Categoría de Maquinaria',
-                type: 'pie', 
-                radius: '60%',
-                data: datos2.map(function(item) {
-                return {
-                    name: item.nombre,
-                    value: item.cantidad
-                };
-            }),
-            label: {
-                show: true,
-                formatter: '{b}: {c}' 
-            }
-        }]
-        };
-
-        myChart2.setOption(option2);
+        <form id="capture-form" method="post" style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" name="x1" id="x1">
+            <input type="hidden" name="y1" id="y1">
+            <input type="hidden" name="x2" id="x2">
+            <input type="hidden" name="y2" id="y2">
+        </form>
+        <script>
+            document.getElementById('download-pdf-button').addEventListener('click', function () {
+                document.getElementById('x1').value = 0;  // Coordenada x1
+                document.getElementById('y1').value = 0;  // Coordenada y1
+                document.getElementById('x2').value = 200;  // Coordenada x2
+                document.getElementById('y2').value = 200;  // Coordenada y2
+        
+                var formData = new FormData(document.getElementById('capture-form'));
+        
+                fetch({% url 'descargapdf' %}, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.blob())
+                .then(data => {
+                    var file = new Blob([data], { type: 'application/pdf' });
+                    var fileURL = URL.createObjectURL(file);
+                    window.open(fileURL);
+                });
+            });
         </script>
     </div>
-
-
-    <div class="div4" style="background: white; border: 3px solid #808080; ">
-       <div id="container"></div>
-    </div>
     
-
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            $.ajax({
-                url: '#',
-                dataType: 'json',
-                success: function (data) {
-                    Highcharts.chart('container', {
-                        chart: {
-                            type: 'pie'
+    
+    <div class="div2" style="text-align: center; background-color:white; border-radius: 10px; border: 3px solid #808080;">
+        <canvas id="duracionPromedioChart" style="padding-left: 2%;"></canvas>
+        <script>
+            fetch("{% url 'grafico1' %}")
+                .then(response => response.json())
+                .then(data => {
+                    var ctx = document.getElementById('duracionPromedioChart').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: 'Duración Promedio (días)',
+                                data: data.values,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgb(75, 192, 192)',
+                                borderWidth: 1
+                            }]
                         },
-                        title: {
-                            text: 'Costos totales de arriendos por categoría de maquinaria'
-                        },
-                        plotOptions: {
-                            pie: {
-                                allowPointSelect: true,
-                                cursor: 'pointer',
-                                dataLabels: {
-                                    enabled: true,
-                                    format: '<b>{point.name}</b>: {point.y:.2f} %'
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
                                 }
                             }
-                        },
-                        series: [{
-                            name: 'Costo Total',
-                            data: data
-                        }]
+                        }
                     });
+                });
+        </script>    
+    </div>
+    <div class="div3" style="background: white; border-radius: 10px; border: 3px solid #808080;" > 
+        <canvas id="doughnutChart" style="padding-left: 2%;"></canvas>
+    </div>
+    <script>
+    // Genera una paleta de colores aleatorios
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    fetch("{% url 'grafico2' %}")
+        .then(response => response.json())
+        .then(data => {
+            var labels = data.labels;
+            var values = data.values;
+            var backgroundColors = [];
+
+            // Genera colores aleatorios para cada sección del gráfico
+            for (var i = 0; i < labels.length; i++) {
+                backgroundColors.push(getRandomColor());
+            }
+
+            var ctx = document.getElementById('doughnutChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: values,
+                        backgroundColor: backgroundColors  // Colores aleatorios
+                    }]
+                },
+                options: {
+                    cutout: '65%',  // Ajusta el tamaño del agujero en el centro (puedes modificarlo)
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            left: 30,  // Ajusta el espacio a la izquierda según sea necesario
+                            right: 30,  // Ajusta el espacio a la derecha según sea necesario
+                            top: 30,  // Ajusta el espacio superior según sea necesario
+                            bottom: 50  // Ajusta el espacio inferior según sea necesario
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',  // Ajusta la posición de la leyenda si es necesario
+                            labels: {
+                                padding: 20  // Ajusta el espacio entre las etiquetas de la leyenda según sea necesario
+                            }
+                        }
+                    }
                 }
             });
         });
+});
+    </script>
+
+
+    <div class="div4" style="background: white; border: 3px solid #808080; border-radius: 10px; ">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <canvas id="myChart3" style="padding-left: 2%;"></canvas>
+    </div>
+    
+    <script>
+        fetch("{% url 'grafico3' %}")
+            .then(response => response.json())
+            .then(data => {
+                var ctx = document.getElementById('myChart3').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: 'Costo Total Por Mes',
+                            data: data.values,
+                            backgroundColor: 'rgba(64, 64, 64, 1)',
+                            borderColor: 'rgba(64, 64, 64, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
     </script>
     
-    <div class="div5" style="background: white; border: 3px solid #808080;"> </div>
+    <div class="div5" style="background: white; border: 3px solid #808080; border-radius: 10px;">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <canvas id="myChart" style="padding-left: 2%;"></canvas>
+    </div>
+    <script>
+        fetch({% url 'grafico4' %})
+            .then(response => response.json())
+            .then(data => {
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: 'Costo Total Por Categoria de Maquinaria',
+                            data: data.values,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgb(75, 192, 192)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+    </script>
 </div>
     
 {% endblock %}

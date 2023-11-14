@@ -32,6 +32,17 @@ urlpatterns = [
     
     #URL GRAFICOS
     path('grafico-arriendos/', views.grafico_arriendos, name='grafico_arriendos'),
+    path('grafico-arriendos3/', views.duracion_promedio_por_categoria, name='grafico1'),
+    path('grafico-arriendos1/', views.chart_data2, name='grafico2'),
+    path('grafico-arriendos3/', views.chart_data3, name='grafico3'),
+    path('grafico-arriendos1/', views.chart_data, name='grafico4'),
+    
+    
+    
+    path('crearpdf/', views.capture_and_create_pdf, name='descargapdf'),
+    
+    
+
     #path('grafico-arriendo/', views.arriendos_chart, name='grafico_arriendo'),
     
     

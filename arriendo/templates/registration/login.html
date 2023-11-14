@@ -14,26 +14,54 @@
   <br/>-->
 
   
-  <form action="" method="post">
+  <!--form action="" method="post">
 
   {% csrf_token %}
+
+  -->
+  <!--style>
+    .login {
+      background-color: rgba(200, 200, 200, 0.7); /* Color gris claro y translúcido */
+      padding: 20px;
+      border-radius: 10px;
+    }
+  </style>
   <!--input type="text" name="username" id="" placeholder="Nombre de Usuario">
     <br>
     <input type="password" name="password" id="" placeholder="Contraseña">
     <br> 
     <button-- class='btn btn-sm btn-primary float-end' type="submit">Iniciar Sesión</button-->
 
-    <div class="card mx-auto" style="width: 30rem">
-      <div class="card-body">
-
-        <h5 class="card-title">Inicio de Sesion</h5>
-        <h7 class="card-subtitle mb-2 text-muted">H&A Maquinarias y Equipos</h7>
-        {{ form | crispy }}
-        <a href={% url 'home' %} class="card-link">Regresar a Inicio</a>
-        <button class='btn btn-sm btn-success float-end' type="submit">Iniciar Sesión</button>
+    <div class="container">
+      <div class="row justify-content-center">
+          <div class="col-md-6 col-12">
+              <form action="" method="post">
+                  {% csrf_token %}
+                  <div class="card">
+                      <div class="card-body" id="login">
+                          <h5 class="card-title">Inicio de Sesion</h5>
+                          <h7 class="card-subtitle mb-2 text-muted">H&A Maquinarias y Equipos</h7>
+                          {{ form | crispy }}
+                          <a href={% url 'home' %} class="card-link">Regresar a Inicio</a>
+                          <button class='btn btn-sm btn-success float-end' type="submit">Iniciar Sesión</button>
+                      </div>
+                  </div>
+              </form>
+          </div>
       </div>
-    </div>
-
+  </div>
+  
+  <style>
+      body {
+          font-size: 1rem;
+      }
+  
+      @media (min-width: 768px) {
+          body {
+              font-size: 1.2rem;
+          }
+      }
+  </style>
   </form>
 </div>
 {% endblock content %}

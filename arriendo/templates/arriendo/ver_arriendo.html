@@ -1,7 +1,10 @@
 {% extends "base/base.html" %}
-
+{% load humanize %}
 {% block content %} 
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <div class="p-3 mb-5 bg-dark rounded-1">
     <div class="container-fluid py-">
       <h1 class="display-10 fw-bold text-white">Portal Arriendo</h1>
@@ -17,6 +20,23 @@
       
     </div>
     <div class="card-body">
+      <!-- Filtro de búsqueda -->
+      <form method="get" class="mb-1">
+        <div class="row">
+            <div class="col-md-2">
+                <input type="text" class="form-control" name="maquina" value="{{ request.GET.maquina }}" placeholder="Buscar por máquina">
+            </div>
+            <div class="col-md-2">
+              <div class="input-group">
+                  <input type="date" class="form-control" name="fecha_inicio" value="{{ request.GET.fecha_inicio }}" placeholder="Buscar por fecha de inicio">
+              </div>
+          </div>
+            
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Filtrar</button>
+        <a name="" id="" class="btn btn-success mt-2" href="{% url 'arriendo' %}" role="button">Limpiar</a>
+      </form>
+      <!-- Filtro de búsqueda -->
         <h4 class="card-title"></h4>
         <div class="table-responsive">
             <table class="table">
@@ -34,8 +54,9 @@
                         
                     </tr>
                 </thead>
+                <!-- Cuerpo de la tabla-->
                 <tbody>
-                
+      
                     {% for Arriendos in arriendos %}   
                     <tr class="">
                         <td scope="row">{{ Arriendos.id_arriendo }}</td>
@@ -47,7 +68,7 @@
                         <td>{{ Arriendos.fecha_inicio }}</td>
                         <td>{{ Arriendos.fecha_entrega }}</td>
                         <td>{{ Arriendos.dias_arriendo }}</td>
-                        <td>{{ Arriendos.costo_total }}</td>
+                        <td>$ {{ Arriendos.costo_total|intcomma }}</td>
                         <td>
                             <a href="{% url 'editar_arriendo' Arriendos.id_arriendo %}" class="btn btn-info">Editar</a>
                             <a href="{% url 'eliminar_arriendo' Arriendos.id_arriendo %}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarEliminacionModal{{ Arriendos.id_arriendo }}">Eliminar</a>
@@ -72,19 +93,38 @@
                           </div>
                         </div>
                     </div>
-                    
+                    <!--Modal para boton eliminar-->
                     {% endfor %}
                     
                 </tbody>
             </table>
         </div>
+
+        <!-- Código para la paginación -->
+        <div class="pagination">
+          <span class="step-links">
+            {% if arriendos.has_previous %}
+              <a href="?page=1">&laquo; primera</a>
+              <a href="?page={{ arriendos.previous_page_number }}">anterior</a>
+            {% endif %}
+
+            {% for i in arriendos.paginator.page_range %}
+              <a href="?page={{ i }}">{{ i }}</a>
+            {% endfor %}
+
+            {% if arriendos.has_next %}
+              <a href="?page={{ arriendos.next_page_number }}">siguiente</a>
+              <a href="?page={{ arriendos.paginator.num_pages }}">última &raquo;</a>
+            {% endif %}
+          </span>
+        </div>
+        <!-- Código para la paginación -->
+  </div>
+</div>
         
     </div>
     
 </div>
-
-
-
 
 
 {% endblock %}

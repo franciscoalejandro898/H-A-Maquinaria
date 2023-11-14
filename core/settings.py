@@ -27,12 +27,16 @@ SECRET_KEY = 'django-insecure-g@t@asvv^h^46=gq6va^4!bdyk#w4ixi5k5(dewuust-jfuqs&
 DEBUG = True
 
 ALLOWED_HOSTS = []
+#'192.168.1.9', '192.168.1.10', '192.168.1.21'
+#para ver ipv4
+#ipconfig
 
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.humanize',
     'bootstrap_datepicker_plus',
     'crispy_forms',
     'crispy_bootstrap5',
@@ -114,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'UTC'
 
