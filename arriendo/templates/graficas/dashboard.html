@@ -32,7 +32,7 @@
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
     <div class="div1" style="background: #212529; height: 100px; border-radius: 10px;">
         <h1 style="padding-left: 1%; color: white; text-align: center; line-height: 100px; height: 100px;">Dashboard</h1>
-        <!--a id="download-pdf-button" class="btn btn-primary" href="javascript:void(0)">Descargar En PDF</a>-->
+        <a id="download-pdf-button" class="btn btn-primary" href="javascript:void(0)">Descargar PDF</a>
 
         <form id="capture-form" method="post" style="display: none;">
             {% csrf_token %}
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     data: {
                         labels: data.labels,
                         datasets: [{
-                            label: 'Costo Total Por Mes',
+                            label: 'Cantidad de arriendos en promedio es un mes',
                             data: data.values,
                             backgroundColor: 'rgba(64, 64, 64, 1)',
                             borderColor: 'rgba(64, 64, 64, 1)',
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     data: {
                         labels: data.labels,
                         datasets: [{
-                            label: 'Costo Total Por Categoria de Maquinaria',
+                            label: 'Ingreso Total Por Categoría de Maquinaria',
                             data: data.values,
                             backgroundColor: 'rgba(75, 192, 192, 0.2)',
                             borderColor: 'rgb(75, 192, 192)',

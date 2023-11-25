@@ -34,7 +34,7 @@ class Maquinaria(models.Model):
     nombre_m = models.CharField(max_length=20, verbose_name="Nombre Maquinaria")
     categoria_m = models.ForeignKey(Categorias, on_delete=models.SET_NULL, null=True, verbose_name="Categorias")
     bodega_m = models.ForeignKey(Bodegas, on_delete=models.SET_NULL, null=True)
-    valor_dia = models.DecimalField(max_digits=10, decimal_places=2)
+    valor_dia = models.DecimalField(max_digits=10, decimal_places=0)
 
     def maquinaria(self):
         return "{}".format(self.nombre_m)

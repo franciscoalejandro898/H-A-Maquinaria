@@ -1,5 +1,6 @@
 {% extends "base/base.html" %}
 {% block content %} 
+{% load humanize %}
 
 
 <div class="p-3 mb-5 bg-dark rounded-1 table-responsive">
@@ -39,6 +40,7 @@
                         <th scope="col">Categoria</th>
                         <th scope="col">Bodega</th>
                         <th scope="col">Estado Maquinaria</th>
+                        <th scope="col">Valor Diario</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
@@ -50,6 +52,7 @@
                         <td>{{ Maquinaria.categoria_m }}</td>
                         <td>{{ Maquinaria.bodega_m }}</td>
                         <td>{{ Maquinaria.estado }}</td>
+                        <td>$ {{ Maquinaria.valor_dia|intcomma }}</td>
 
                         <td>
                             <a href="{% url 'editar_maquinaria' Maquinaria.id_m %}" class="btn btn-info">Editar</a>
