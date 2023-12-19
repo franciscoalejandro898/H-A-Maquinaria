@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-g@t@asvv^h^46=gq6va^4!bdyk#w4ixi5k5(dewuust-jfuqs&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.20.10.4']
+ALLOWED_HOSTS = []
 #'192.168.1.9', '192.168.1.10', '192.168.1.21'
 #para ver ipv4
 #ipconfig
