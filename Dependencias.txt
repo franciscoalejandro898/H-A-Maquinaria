@@ -47,6 +47,5 @@ wheel==0.41.2
 xhtml2pdf==0.2.11
 
 
-Comando instalacion:
-pip install -r dependencias.txt
+
 
