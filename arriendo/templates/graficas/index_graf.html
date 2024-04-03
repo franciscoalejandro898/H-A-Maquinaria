@@ -1,0 +1,154 @@
+{% extends 'base/base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block content %} 
+
+<div class="parent">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <style>
+        .parent {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            grid-column-gap: 1%;
+            grid-row-gap: 1%;
+            min-height: 100vh;
+        }
+        
+        .div1 { grid-area: 1 / 1 / 2 / 2; }
+        .div2 { grid-area: 1 / 2 / 2 / 3; }
+        .div3 { grid-area: 2 / 1 / 3 / 2; }
+        .div4 { grid-area: 2 / 2 / 3 / 3; }
+    </style>
+    <div class="div1"> 
+        <div id="grafico-container1" style="width: 100%; height: 100%; background-color: white; text-align: center;"></div> 
+        <script type="text/javascript">
+            var datos1 = {{ datos|safe }};
+    
+            var myChart1 = echarts.init(document.getElementById('grafico-container1'));
+            var option1 = {
+                title: {
+                    text: 'Arriendos por Categoría de Maquinaria',
+                },
+                xAxis: {
+                    type: 'category',
+                    data: datos1.map(function(item) {
+                        return item.nombre;
+                    }),
+                    axisLabel: {
+                        show: true, // Esto mostrará las etiquetas en el eje X
+                        interval: 0,
+                    }
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: datos1.map(function(item) {
+                        return item.cantidad;
+                    }),
+                    type: 'bar'
+                }]
+            };
+            myChart1.setOption(option1);
+        </script>
+    </div>
+
+    <div class="div2"> 
+        <div id="grafico-container2" style="width: 100%; height: 100%; background-color: white; text-align: center;"></div>
+<script type="text/javascript">
+    var datos2 = {{ datos|safe }};
+
+    var myChart2 = echarts.init(document.getElementById('grafico-container2'));
+    var option2 = {
+        title: {
+            text: 'Arriendos por Categoría de Maquinaria',
+        },
+        series: [{
+            name: 'Categoría de Maquinaria',
+            type: 'pie', 
+            radius: '60%',
+            data: datos2.map(function(item) {
+                return {
+                    name: item.nombre,
+                    value: item.cantidad
+                };
+            }),
+            label: {
+                show: true,
+                formatter: '{b}: {c}' 
+            }
+        }]
+    };
+
+    myChart2.setOption(option2);
+</script>
+    </div>
+
+    <div class="div3"> 
+        <div id="grafico-container3" style="width: 100%; height: 100%; background-color: white; text-align: center;"></div>
+<script type="text/javascript">
+    var datos2 = {{ datos|safe }};
+
+    var myChart2 = echarts.init(document.getElementById('grafico-container3'));
+    var option2 = {
+        title: {
+            text: 'Arriendos por Categoría de Maquinaria',
+        },
+        series: [{
+            name: 'Categoría de Maquinaria',
+            type: 'pie', 
+            radius: '60%',
+            data: datos2.map(function(item) {
+                return {
+                    name: item.nombre,
+                    value: item.cantidad
+                };
+            }),
+            label: {
+                show: true,
+                formatter: '{b}: {c}' 
+            }
+        }]
+    };
+
+    myChart2.setOption(option2);
+</script>
+    </div>
+    <div class="div4"> 
+        <div id="grafico-container4" style="width: 100%; height: 100%; background-color: white; text-align: center;"></div> 
+        <script type="text/javascript">
+            // Asegúrate de que los datos tengan un nombre único, como datos4
+            var datos4 = {{ datos|safe }};
+    
+            var myChart4 = echarts.init(document.getElementById('grafico-container4'));
+            var option4 = {
+                title: {
+                    text: 'Arriendos por Categoría de Maquinaria',
+                },
+                xAxis: {
+                    type: 'category',
+                    data: datos4.map(function(item) {
+                        return item.nombre;
+                    }),
+                    axisLabel: {
+                        show: true, // Esto mostrará las etiquetas en el eje X
+                    }
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: datos4.map(function(item) {
+                        return item.cantidad;
+                    }),
+                    type: 'bar'
+                }]
+            };
+            myChart4.setOption(option4);
+        </script>
+    </div>
+</div>
+
+{% endblock %}

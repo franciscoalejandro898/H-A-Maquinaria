@@ -1,0 +1,112 @@
+{% extends "base/base.html" %}
+{% block content %} 
+{% load humanize %}
+
+
+<div class="p-3 mb-5 bg-dark rounded-1 table-responsive">
+    <div class="container-fluid py-">
+      <h1 class="display-10 fw-bold text-white">Portal Maquinarias</h1>
+    </div>
+  </div>
+
+<!--Tabla Maquinarias -->
+<div class="card">
+    <div class="card-header p-2 bg-dark text-white d-flex justify-content-between">
+    <!-- <div class="card-header p-2 bg-dark text-white">-->
+        <h2 class="fw-normal fs-3">Maquinaria</h2>
+        <a name="" id="" class="btn btn-primary ml-auto" href={% url 'agregar_maquinaria' %} role="button">Agregar maquinaria</a>
+      
+    </div>
+    <div class="card-body">
+        <!-- Filtro de búsqueda -->
+      <form method="get" class="mb-1">
+        <div class="row">
+            <div class="col-md-2">
+                <input type="text" class="form-control" name="m_filter" value="{{ request.GET.m_filter }}" placeholder="Buscar por nombre Maquinaria">
+            </div>
+            
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Filtrar</button>
+        <a name="" id="" class="btn btn-success mt-2" href="{% url 'maquinaria' %}" role="button">Limpiar</a>
+      </form>
+      <!-- Filtro de búsqueda -->
+        <h4 class="card-title"></h4>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">SKU</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Bodega</th>
+                        <th scope="col">Estado Maquinaria</th>
+                        <th scope="col">Valor Diario</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Maquinaria in maquinarias %}
+                    <tr class="">
+                        <td scope="row">{{ Maquinaria.sku }}</td>
+                        <td>{{ Maquinaria.nombre_m }}</td>
+                        <td>{{ Maquinaria.categoria_m }}</td>
+                        <td>{{ Maquinaria.bodega_m }}</td>
+                        <td>{{ Maquinaria.estado }}</td>
+                        <td>$ {{ Maquinaria.valor_dia|intcomma }}</td>
+
+                        <td>
+                            <a href="{% url 'editar_maquinaria' Maquinaria.id_m %}" class="btn btn-info">Editar</a>
+                            <a href="{% url 'eliminar_maquinaria' Maquinaria.id_m %}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarEliminacionModal{{ Maquinaria.id_m }}">Eliminar</a>
+                        </td>
+                        
+                    </tr>
+                    <!--Modal para boton eliminar-->
+                    <div class="modal fade" id="confirmarEliminacionModal{{ Maquinaria.id_m }}" tabindex="-1" aria-labelledby="confirmarEliminacionModalLabel{{ Maquinaria.id_m }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="confirmarEliminacionModalLabel{{ Maquinaria.id_m }}">Confirmar Eliminación</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              ¿Estás seguro de que deseas eliminar esta Máquina?
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                              <a href="{% url 'eliminar_maquinaria' Maquinaria.id_m %}" class="btn btn-danger" id="eliminarButton{{ Maquinaria.id_m }}">Eliminar</a>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <!--Modal para boton eliminar-->
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- Paginacion-->
+        <div class="pagination">
+            <span class="step-links">
+                {% if maquinarias.has_previous %}
+                    <a href="?page=1">&laquo; primera</a>
+                    <a href="?page={{ maquinarias.previous_page_number }}">anterior</a>
+                {% endif %}
+    
+                <span class="current-page">
+                    Página {{ maquinarias.number }} de {{ maquinarias.paginator.num_pages }}.
+                </span>
+    
+                {% if maquinarias.has_next %}
+                    <a href="?page={{ maquinarias.next_page_number }}">siguiente</a>
+                    <a href="?page={{ maquinarias.paginator.num_pages }}">última &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        <!-- Paginacion-->
+        
+    </div>
+    
+</div>
+
+
+{% endblock %}
+

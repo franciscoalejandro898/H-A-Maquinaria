@@ -1,0 +1,229 @@
+{% extends 'base/base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<div class="container">
+<script src="https://code.highcharts.com/dashboards/dashboards.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/dashboards/modules/dashboards-plugin.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.highcharts.com/css/highcharts.css">
+<link rel="stylesheet" type="text/css" href="https://code.highcharts.com/dashboards/css/dashboards.css">
+<div class="container">
+  
+{% block content %}
+<style>
+    .parent {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        grid-column-gap: 1.5%;
+        grid-row-gap: 1.5%;
+        min-height: 100vh;
+        }
+        
+        .div1 { grid-area: 1 / 1 / 2 / 3; }
+        .div2 { grid-area: 2 / 1 / 4 / 2; }
+        .div3 { grid-area: 2 / 2 / 4 / 3; }
+        .div4 { grid-area: 4 / 1 / 6 / 2; }
+        .div5 { grid-area: 4 / 2 / 6 / 3; }
+</style>
+ <div class="parent">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <div class="div1" style="background: #212529; height: 100px; border-radius: 10px;">
+        <h1 style="padding-left: 1%; color: white; text-align: center; line-height: 100px; height: 100px;">Dashboard</h1>
+        <a id="download-pdf-button" class="btn btn-primary" href="javascript:void(0)">Descargar PDF</a>
+
+        <form id="capture-form" method="post" style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" name="x1" id="x1">
+            <input type="hidden" name="y1" id="y1">
+            <input type="hidden" name="x2" id="x2">
+            <input type="hidden" name="y2" id="y2">
+        </form>
+        <script>
+            document.getElementById('download-pdf-button').addEventListener('click', function () {
+                document.getElementById('x1').value = 0;  // Coordenada x1
+                document.getElementById('y1').value = 0;  // Coordenada y1
+                document.getElementById('x2').value = 200;  // Coordenada x2
+                document.getElementById('y2').value = 200;  // Coordenada y2
+        
+                var formData = new FormData(document.getElementById('capture-form'));
+        
+                fetch({% url 'descargapdf' %}, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.blob())
+                .then(data => {
+                    var file = new Blob([data], { type: 'application/pdf' });
+                    var fileURL = URL.createObjectURL(file);
+                    window.open(fileURL);
+                });
+            });
+        </script>
+    </div>
+    
+    
+    <div class="div2" style="text-align: center; background-color:white; border-radius: 10px; border: 3px solid #808080;">
+        <canvas id="duracionPromedioChart" style="padding-left: 2%;"></canvas>
+        <script>
+            fetch("{% url 'grafico1' %}")
+                .then(response => response.json())
+                .then(data => {
+                    var ctx = document.getElementById('duracionPromedioChart').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: 'Duración Promedio (días)',
+                                data: data.values,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgb(75, 192, 192)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                });
+        </script>    
+    </div>
+    <div class="div3" style="background: white; border-radius: 10px; border: 3px solid #808080;" > 
+        <canvas id="doughnutChart" style="padding-left: 2%;"></canvas>
+    </div>
+    <script>
+    // Genera una paleta de colores aleatorios
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    fetch("{% url 'grafico2' %}")
+        .then(response => response.json())
+        .then(data => {
+            var labels = data.labels;
+            var values = data.values;
+            var backgroundColors = [];
+
+            // Genera colores aleatorios para cada sección del gráfico
+            for (var i = 0; i < labels.length; i++) {
+                backgroundColors.push(getRandomColor());
+            }
+
+            var ctx = document.getElementById('doughnutChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: values,
+                        backgroundColor: backgroundColors  // Colores aleatorios
+                    }]
+                },
+                options: {
+                    cutout: '65%',  // Ajusta el tamaño del agujero en el centro (puedes modificarlo)
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            left: 30,  // Ajusta el espacio a la izquierda según sea necesario
+                            right: 30,  // Ajusta el espacio a la derecha según sea necesario
+                            top: 30,  // Ajusta el espacio superior según sea necesario
+                            bottom: 50  // Ajusta el espacio inferior según sea necesario
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',  // Ajusta la posición de la leyenda si es necesario
+                            labels: {
+                                padding: 20  // Ajusta el espacio entre las etiquetas de la leyenda según sea necesario
+                            }
+                        }
+                    }
+                }
+            });
+        });
+});
+    </script>
+
+
+    <div class="div4" style="background: white; border: 3px solid #808080; border-radius: 10px; ">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <canvas id="myChart3" style="padding-left: 2%;"></canvas>
+    </div>
+    
+    <script>
+        fetch("{% url 'grafico3' %}")
+            .then(response => response.json())
+            .then(data => {
+                var ctx = document.getElementById('myChart3').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: 'Cantidad de arriendos en promedio es un mes',
+                            data: data.values,
+                            backgroundColor: 'rgba(64, 64, 64, 1)',
+                            borderColor: 'rgba(64, 64, 64, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+    </script>
+    
+    <div class="div5" style="background: white; border: 3px solid #808080; border-radius: 10px;">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <canvas id="myChart" style="padding-left: 2%;"></canvas>
+    </div>
+    <script>
+        fetch({% url 'grafico4' %})
+            .then(response => response.json())
+            .then(data => {
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: 'Ingreso Total Por Categoría de Maquinaria',
+                            data: data.values,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgb(75, 192, 192)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+    </script>
+</div>
+    
+{% endblock %}

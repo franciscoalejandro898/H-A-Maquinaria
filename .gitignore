@@ -56,3 +56,7 @@ pyrightconfig.json
 [Ss]cripts
 pyvenv.cfg
 pip-selfcheck.json
+*.pyc
+__pycache__/
+db.sqlite3
+

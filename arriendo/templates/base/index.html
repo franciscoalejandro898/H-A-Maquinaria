@@ -1,0 +1,29 @@
+{% extends "base/base.html" %}
+
+
+{% block content %} 
+
+<div class=" p-2 mb-3 bg-dark rounded-2">
+  <div class="container-fluid py-">
+    {% if user.is_authenticated %}
+    <h1 class="display-20 fw-bold text-white">Bienvenido al Sistema de Control de Arriendo H&A Maquinarias</h1>
+    {% else %}
+    <h1 class="display-20 fw-bold text-white">Sistema de Control de Arriendo H&A Maquinarias</h1>
+    {% endif %}
+
+
+    <p class="col-md-8 fs-5 text-white ">Sistema diseñado para mantener el control en los registros de arriendo.</p>
+    
+    {% if user.is_authenticated %}
+    {% else %}
+    <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Iniciar Sesión</a>
+    {% endif %}
+
+  </div>
+</div>
+
+
+
+{% endblock %}
+
+
