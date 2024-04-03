@@ -48,15 +48,80 @@ pyrightconfig.json
 ### Entorno virtual ###
 # entorno virtual
 # http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
-[Si bemol]en
-[Incluyo
-[Ll]ib
-[Ll]ib64
-[L]local
-[Ss]cripts
-pyvenv.cfg
-pip-selfcheck.json
+# Entornos virtuales
+venv/
+env/
+mienv/
 *.pyc
+
+# Bytecode de Python
 __pycache__/
+
+# Base de datos SQLite
 db.sqlite3
+
+# Archivos generados por el sistema
+*.pyo
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Archivos de configuración local
+*.log
+local_settings.py
+pyvenv.cfg
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Directorios de herramientas
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Archivos de distribución
+dist/
+build/
+docs/_build/
+
+# Archivos de PyBuilder
+target/
+
+# Archivos Jupyter Notebook
+.ipynb_checkpoints
+
+# Archivo de ambiente pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath archivos temporales de cálculo
+*.sage.py
+
+# Archivos de entorno
+.env
+.env.local
+
 
