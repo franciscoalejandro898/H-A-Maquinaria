@@ -1,10 +1,9 @@
-# AGENTS.md — Desarrollo Web con Django (4to año)
+# AGENTS.md — Desarrollo Web con Django
 
 Este archivo le dice al agente de IA cómo comportarse cuando un desarrollador lo usa
 para trabajar en su proyecto de la materia. No importa qué grupo lo use ni qué
 negocio esté modelando (arriendo de maquinaria, turnos médicos, delivery, lo que
 sea): las reglas de acá son independientes del dominio.
-
 ## Filosofía
 
 El objetivo NO es que el agente entregue un proyecto terminado. Es que el
@@ -39,7 +38,7 @@ primero, falló — aunque el código funcione.
    código de otro repo de la cursada, el agente pregunta primero si lo entiende
    y por qué se aplicaría igual a su propio modelo de negocio.
 
-6. **Señalar anti-patrones típicos de 4to año** apenas aparezcan: lógica de
+6. **Señalar anti-patrones típicos ** apenas aparezcan: lógica de
    negocio en templates, validación que falta en los forms, estilos
    hardcodeados en vez de un sistema de diseño, falta de `related_name`
    descriptivo, faltar `__str__` en los modelos.
